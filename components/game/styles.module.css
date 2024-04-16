@@ -1,0 +1,18 @@
+.gameInfo {
+  margin-bottom: 10px;
+}
+
+
+
+.symbol {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.symbolX {
+  color: red;
+}
+
+.symbolO {
+  color: green;
+}
