@@ -1,10 +1,11 @@
 import Image from "next/image";
 
 import avatar from "./avatar.png";
+import clsx from "clsx";
 
-export const Profile = () => {
+export const Profile = ({className}) => {
   return (
-    <div className="flex items-center gap-2 text-start text-teal-600" >
+    <div className={clsx(className, "flex items-center gap-2 text-start text-teal-600")} >
       <Image src={avatar} alt="avatar" height={48} width={48} />
       <div>
         <div className="text-lg leading-toght">Paromovevg</div>
