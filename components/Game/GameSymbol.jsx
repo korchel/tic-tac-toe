@@ -1,13 +1,18 @@
-import { SYMBOL_O, SYMBOL_X } from './constants';
-import clsx from 'clsx';
+import ZeroIcon from './icons/zero.svg';
+import CrossIcon from './icons/cross.svg';
+import TriangleIcon from './icons/triangle.svg';
+import SquareIcon from './icons/square.svg';
+import { SYMBOLS } from './constants';
 
-const GameSymbol = ({ symbol }) => {
-  const getSymbolClassName = (symbol) => {
-    if (symbol === SYMBOL_O) return 'text-green-500';
-    if (symbol === SYMBOL_X) return 'text-red-500';
-    return '';
-  }
-  return <span className={clsx('text-xl leading-6', getSymbolClassName(symbol))}>{symbol}</span>
-}
+export const GameSymbol = ({ symbol, className }) => {
+  const Icon = {
+    [SYMBOLS.CROSS]: CrossIcon,
+    [SYMBOLS.ZERO]: ZeroIcon,
+    [SYMBOLS.TRIANGLE]: TriangleIcon,
+    [SYMBOLS.SQUARE]: SquareIcon,
+  }[symbol];
+
+  return <Icon className={className} />;
+};
 
 export default GameSymbol;
