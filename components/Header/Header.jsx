@@ -11,7 +11,7 @@ export const Header = () => {
       <div className="w-px h-8 bg-slate-200 mx-6" />
       <ButtonComponent className="w-44" variant="primary" size="lg">Играть</ButtonComponent>
       <button className="ml-auto flex items-center gap-2 text-start text-teal-600" >
-        <Profile />
+        <Profile name={'name'} rating={1234} />
         <ArrowDownIcon className="text-teal-600" />
       </button>
     </header>

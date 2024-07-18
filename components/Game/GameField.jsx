@@ -1,30 +1,11 @@
-import { useState } from "react";
 import clsx from "clsx";
 
 import { ButtonComponent } from "../uikit/ButtonComponent";
-import { SYMBOLS, MOVE_ORDER } from './constants';
-import {GameSymbol} from "./GameSymbol";
+import  {GameSymbol } from "./GameSymbol";
+import { useGameState } from "./useGameState";
 
-const getNextMove = (currentMove) => {
-  const nextMoveIndex = MOVE_ORDER.indexOf(currentMove) + 1;
-  return MOVE_ORDER[nextMoveIndex] ?? MOVE_ORDER[0];
-};
-
-export const GameField = ({ className }) => {
-  const [{ cells, currentMove }, setGameState] = useState(() => ({
-    cells: new Array(19 * 19).fill(null),
-    currentMove: SYMBOLS.CROSS,
-  }));
-
-  const nextMove = getNextMove(currentMove);
-
-  const handleClickCell = (index) => {
-    setGameState((prevState) => ({
-      ...prevState,
-      currentMove: getNextMove(prevState.currentMove),
-      cells: prevState.cells.map((cell, i) => i === index ? getNextMove(prevState.currentMove) : cell),
-    }));
-  };
+export const GameField = ({ className, playersNumber }) => {
+  const { cells, nextMove, currentMove, handleClickCell } = useGameState(playersNumber);
 
   return (
     <GameFieldLayout className={className}>

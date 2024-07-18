@@ -14,5 +14,3 @@ export const GameSymbol = ({ symbol, className }) => {
 
   return <Icon className={className} />;
 };
-
-export default GameSymbol;
