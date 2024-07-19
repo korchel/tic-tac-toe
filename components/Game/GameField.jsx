@@ -2,10 +2,9 @@ import clsx from "clsx";
 
 import { ButtonComponent } from "../uikit/ButtonComponent";
 import  {GameSymbol } from "./GameSymbol";
-import { useGameState } from "./useGameState";
 
-export const GameField = ({ className, playersNumber }) => {
-  const { cells, nextMove, currentMove, handleClickCell } = useGameState(playersNumber);
+export const GameField = ({ className, cells, currentMove, nextMove, handleClickCell }) => {
+  
 
   return (
     <GameFieldLayout className={className}>

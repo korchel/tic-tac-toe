@@ -3,6 +3,7 @@ import { Profile } from '../Profile/Profile';
 import {GameSymbol} from './GameSymbol';
 import { SYMBOLS } from './constants';
 import avatar from '../Profile/avatar.png';
+import { useEffect, useState } from 'react';
 
 const players = [
   { name: "name", rating: 123, symbol: SYMBOLS.ZERO, avatar: avatar, id: 1 },
@@ -11,18 +12,49 @@ const players = [
   { name: "name", rating: 123, symbol: SYMBOLS.SQUARE, avatar: avatar, id: 4 },
 ]
 
-export const GameInfo = ({ className, playersNumber }) => {
+export const GameInfo = ({ className, playersNumber, currentMove }) => {
 
   return (
     <div className={clsx(className, "bg-white rounded-2xl shadow-md px-8 py-4 grid grid-cols-2 gap-3")}>
       {
-        players.slice(0, playersNumber).map((player, index) => <PlayerInfo key={player.id} info={player} mirrored={index % 2 === 1} />)
+        players.slice(0, playersNumber).map((player, index) => (
+          <PlayerInfo
+            timerOn={currentMove === player.symbol}
+            key={player.id}
+            info={player}
+            mirrored={index % 2 === 1}
+          />)
+        )
       }
     </div>
   );
 };
 
-function PlayerInfo({ info, mirrored }) {
+function PlayerInfo({ info, mirrored, timerOn }) {
+  const [timer, setTimer] = useState(60);
+  const minutes = String(Math.floor(timer / 60)).padStart(2, "0");
+  const seconds = String(Math.floor(timer % 60)).padStart(2, "0");
+
+  const isDanger = timer <= 10;
+
+  useEffect(() => {
+    if (timerOn) {
+      const interval = setInterval(() => {
+        setTimer((timer) => Math.max(timer - 1, 0));
+      }, 1000);
+      return () => {
+        clearInterval(interval);
+        setTimer(60);
+      }
+    }
+  }, [timerOn]);
+
+  const getTimerColor = () => {
+    if (timerOn) {
+      return isDanger ? 'text-orange-600' : 'text-slate-900';
+    }
+    return 'text-slate-300';
+  }
   return (
     <div className="flex gap-3 items-center">
         <div className={clsx("relative", mirrored && 'order-3')} >
@@ -32,8 +64,12 @@ function PlayerInfo({ info, mirrored }) {
           </div>
         </div>
         <div className={clsx("h-6 w-px bg-slate-200", mirrored && 'order-2')}/>
-        <div className={clsx("text-slate-500 text-lg font-semibold", mirrored && 'order-1')}>
-            01:08
+        <div className={clsx(
+          "text-lg font-semibold w-[60px]",
+          mirrored && 'order-1',
+          getTimerColor()
+        )}>
+            {minutes}:{seconds}
         </div>
       </div>
   )
