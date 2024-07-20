@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MOVE_ORDER, SYMBOLS } from "./constants";
+import { MOVE_ORDER, SYMBOLS } from "../constants";
 
 // const computeWinner = (cells) => {
 //   const lines = [

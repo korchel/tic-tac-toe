@@ -4,6 +4,7 @@ import {GameSymbol} from './GameSymbol';
 import { SYMBOLS } from './constants';
 import avatar from '../Profile/avatar.png';
 import { useEffect, useState } from 'react';
+import { useNow } from './hooks/useNow';
 
 const players = [
   { name: "name", rating: 123, symbol: SYMBOLS.ZERO, avatar: avatar, id: 1 },
@@ -31,23 +32,26 @@ export const GameInfo = ({ className, playersNumber, currentMove }) => {
 };
 
 function PlayerInfo({ info, mirrored, timerOn }) {
-  const [timer, setTimer] = useState(60);
-  const minutes = String(Math.floor(timer / 60)).padStart(2, "0");
-  const seconds = String(Math.floor(timer % 60)).padStart(2, "0");
+  const [startTime, setStartTime] = useState();
 
-  const isDanger = timer <= 10;
+  const now = useNow();
+
+  const timePassed = (now - (startTime ?? now) ) / 1000;
+  const countDown = Math.max((60 - timePassed), 0);
+
+  const minutes = String(Math.floor(countDown / 60)).padStart(2, "0");
+  const seconds = String(Math.floor(countDown % 60)).padStart(2, "0");
 
   useEffect(() => {
     if (timerOn) {
-      const interval = setInterval(() => {
-        setTimer((timer) => Math.max(timer - 1, 0));
-      }, 1000);
-      return () => {
-        clearInterval(interval);
-        setTimer(60);
-      }
+      setStartTime(Date.now())
     }
+    return () => {
+      setStartTime();
+    };
   }, [timerOn]);
+
+  const isDanger = countDown <= 10;
 
   const getTimerColor = () => {
     if (timerOn) {
