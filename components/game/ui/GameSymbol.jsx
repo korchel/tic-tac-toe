@@ -2,7 +2,7 @@ import ZeroIcon from './icons/zero.svg';
 import CrossIcon from './icons/cross.svg';
 import TriangleIcon from './icons/triangle.svg';
 import SquareIcon from './icons/square.svg';
-import { SYMBOLS } from './constants';
+import { SYMBOLS } from '../constants';
 
 export const GameSymbol = ({ symbol, className }) => {
   const Icon = {

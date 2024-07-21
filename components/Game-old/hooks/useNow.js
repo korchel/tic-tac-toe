@@ -2,8 +2,8 @@ import { useEffect, useLayoutEffect, useState } from "react";
 
 export const useNow = () => {
   const [now, setNow] = useState(Date.now());
-  console.log(now)
-  useLayoutEffect(() => {
+
+  useEffect(() => {
     setNow(Date.now());
   
     const intervalId = setInterval(() => {

@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { ButtonComponent } from "../uikit/ButtonComponent";
 import  {GameSymbol } from "./GameSymbol";
 
-export const GameField = ({ className, cells, currentMove, nextMove, handleClickCell }) => {
+export const GameField = ({ className, cells, currentMove, nextMove, handleClickCell, winnerSequence, winnerSymbol }) => {
   
 
   return (
@@ -17,7 +17,12 @@ export const GameField = ({ className, cells, currentMove, nextMove, handleClick
       />
       <GameGrid>
         {cells.map((symbol, i) => (
-          <GameCell key={i} clickCell={() => { handleClickCell(i) }}>
+          <GameCell
+            key={i}
+            clickCell={() => { handleClickCell(i) }}
+            isWinner={winnerSequence?.includes(i)}
+            disabled={!!winnerSymbol}
+          >
             {symbol && <GameSymbol className="w-5 h-5" symbol={symbol} />}
           </GameCell>
         ))}
@@ -58,9 +63,13 @@ function GameGrid({ children }) {
   );
 }
 
-function GameCell({ children, clickCell }) {
+function GameCell({ children, clickCell, isWinner, disabled }) {
   return (
-    <button onClick={clickCell} className="border bordwer-slate-200 -ml-px -mt-px flex items-center justify-center">
+    <button
+      disabled={disabled}
+      onClick={clickCell}
+      className={clsx("border bordwer-slate-200 -ml-px -mt-px flex items-center justify-center", isWinner && "bg-orange-600/10")}
+    >
       {children}
     </button>
   );
