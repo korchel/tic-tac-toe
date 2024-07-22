@@ -1,15 +1,18 @@
 import { ButtonComponent } from "../../uikit/ButtonComponent";
 import { ModalComponent } from "../../uikit/ModalComponent";
 
-export const GameOverModal = () => {
+export const GameOverModal = ({ winnerName, playersList }) => {
   return (
-    <ModalComponent isOpen={!!winnerSymbol}>
+    <ModalComponent isOpen={!!winnerName}>
       <ModalComponent.Header>
         Игра завершена
       </ModalComponent.Header>
       <ModalComponent.Body>
-        <div>
-
+        <div className="text-sm">
+          Победитель: <span className="text-teal-600">{winnerName}</span>
+        </div>
+        <div className="grid grid-cols-2 gap-3 justify-between mt-2">
+          {playersList}
         </div>
       </ModalComponent.Body>
       <ModalComponent.Footer>

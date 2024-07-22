@@ -11,7 +11,7 @@ export const MOVE_ORDER = [SYMBOLS.ZERO, SYMBOLS.CROSS, SYMBOLS.TRIANGLE, SYMBOL
 
 export const players = [
   { name: "name", rating: 123, symbol: SYMBOLS.ZERO, avatar: avatar, id: 1 },
-  { name: "name", rating: 123, symbol: SYMBOLS.CROSS, avatar: avatar, id: 2 },
+  { name: "!!!", rating: 123, symbol: SYMBOLS.CROSS, avatar: avatar, id: 2 },
   { name: "namegggggggggggggg", rating: 123, symbol: SYMBOLS.TRIANGLE, avatar: avatar, id: 3 },
   { name: "name", rating: 123, symbol: SYMBOLS.SQUARE, avatar: avatar, id: 4 },
 ];

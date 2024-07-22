@@ -1,7 +1,8 @@
 import { useState } from "react";
 
 import { SYMBOLS } from "../constants";
-import { getNextMove, computeWinner } from "../model/model";
+import { computeWinner } from "./computeWinner";
+import { getNextMove } from "./getNextMove";
 
 
 export const useGameState = (playersNumber) => {
