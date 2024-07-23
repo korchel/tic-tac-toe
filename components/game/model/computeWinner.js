@@ -1,4 +1,6 @@
-export const computeWinner = (cells, sequenceSize = 5, fieldSize = 19) => {
+export const computeWinner = (gameState, sequenceSize = 5, fieldSize = 19) => {
+  const { cells } = gameState;
+
   const range = Math.floor(sequenceSize / 2);
 
   const compareElements = (indexes) => {
