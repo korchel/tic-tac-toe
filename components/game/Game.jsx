@@ -17,7 +17,7 @@ import {
 import { useReducer } from "react";
 import { computeWinnerSymbol } from "./model/computeWinnerSymbol";
 
-const PLAYERS_COUNT = 2;
+const PLAYERS_COUNT = 3;
 
 export const Game = () => {
   const [ gameState, dispatch] = useReducer(gameStateReducer, { playersNumber: PLAYERS_COUNT }, getInitialState);
@@ -25,7 +25,7 @@ export const Game = () => {
   const { cells, currentMove, playersNumber } = gameState;
 
   const winnerSequence = computeWinner(gameState);
-  const nextMove = getNextMove(gameState, PLAYERS_COUNT);
+  const nextMove = getNextMove(gameState);
   const winnerSymbol = computeWinnerSymbol(gameState, { winnerSequence, nextMove });
   const winner = players.find((player) => player.symbol === winnerSymbol);
 
@@ -36,7 +36,7 @@ export const Game = () => {
         gameTitle={<GameTitle />}
         gameInfo={<GameInfo
           isRating
-          playersNumber={4}
+          playersNumber={PLAYERS_COUNT}
           timeMode='1 мин. на ход'
         />}
         playersList={

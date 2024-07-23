@@ -14,8 +14,8 @@ export const gameStateReducer = (state, action) => {
       }
       return {
         ...state,
-        currentMove: getNextMove(state.currentMove, state.playersNumber),
-        cells: state.cells.map((cell, i) => i === index ? getNextMove(state.currentMove, state.playersNumber) : cell),
+        currentMove: getNextMove(state),
+        cells: state.cells.map((cell, i) => i === index ? getNextMove(state) : cell),
       };
     }
     default:
