@@ -1,11 +1,7 @@
 import { Game } from "../components/game/Game";
 import { Header } from "../components/Header";
-import { useState } from "react";
 
 const HomePage = () => {
-  const [playersNumber] = useState(2);
-  
-
   return (
     <Layout header={<Header />}>
       <Game />

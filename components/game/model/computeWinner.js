@@ -39,5 +39,4 @@ export const computeWinner = (gameState, sequenceSize = 5, fieldSize = 19) => {
       }
     }
   }
-
 };

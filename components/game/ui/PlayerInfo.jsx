@@ -2,14 +2,27 @@ import Image from "next/image";
 import clsx from "clsx";
 
 import { GameSymbol } from "./GameSymbol";
+import { useNow } from "../../lib/timers";
 
-export const PlayerInfo = ({ mirrored, name, rating, avatar, symbol, isTimerOn, countDown }) => {
-  const minutes = String(Math.floor(countDown / 60)).padStart(2, "0");
-  const seconds = String(Math.floor(countDown % 60)).padStart(2, "0");
+export const PlayerInfo = ({
+  mirrored,
+  name,
+  rating,
+  avatar,
+  symbol,
+  timer,
+  timeStartAt,
+}) => {
+  const now = useNow(1000, timeStartAt);
 
-  const isDanger = countDown <= 10;
+  const mseconds = Math.max(now ? timer - (now - timeStartAt) : timer, 0);
+  const seconds = Math.ceil(mseconds / 1000);
+  const minutesString = String(Math.floor(seconds / 60)).padStart(2, "0");
+  const secondsString = String(seconds % 60).padStart(2, "0");
+
+  const isDanger = seconds <= 10;
   const getTimerColor = () => {
-    if (isTimerOn) {
+    if (timeStartAt) {
       return isDanger ? 'text-orange-600' : 'text-slate-900';
     }
     return 'text-slate-300';
@@ -34,7 +47,7 @@ export const PlayerInfo = ({ mirrored, name, rating, avatar, symbol, isTimerOn, 
         mirrored && 'order-1',
         getTimerColor()
       )}>
-        {minutes}:{seconds}
+        {minutesString}:{secondsString}
       </div>
     </div>
   );

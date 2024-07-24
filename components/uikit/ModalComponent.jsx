@@ -46,7 +46,6 @@ export const ModalComponent = ({ width = 'md', className, children, isOpen = fal
 };
 
 ModalComponent.Header = ({ children, className }) => {
-  console.log('!!!');
   return (
     <div className={clsx(className, 'px-6 pt-6 pb-4 text-2xl')}>
       {children}
