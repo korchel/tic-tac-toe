@@ -2,6 +2,14 @@
 const nextConfig = {
   images: {
     domains: ['courses-top.ru'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+        port: '',
+        pathname: '/account123/**',
+      },
+    ],
   },
   webpack: (config) => {
     config.module.rules.push({

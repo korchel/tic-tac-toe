@@ -1,9 +1,16 @@
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
+import { DetailedHTMLProps, HTMLAttributes } from "react";
 
 import avatarSRC from "./avatar.png";
 import clsx from "clsx";
 
-export const Profile = ({className, name, rating, avatar = avatarSRC}) => {
+interface ProfileProps extends DetailedHTMLProps<HTMLAttributes<HTMLHRElement>, HTMLHRElement> {
+  name: string,
+  rating: number,
+  avatar?: StaticImageData,
+}
+
+export const Profile = ({className, name, rating, avatar = avatarSRC}: ProfileProps): JSX.Element => {
   return (
     <div className={clsx(className, "flex items-center gap-2 text-start text-teal-600")} >
       <Image src={avatar} alt="avatar" height={48} width={48} />

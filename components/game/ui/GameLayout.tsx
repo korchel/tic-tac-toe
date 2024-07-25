@@ -1,3 +1,15 @@
+import { ReactNode } from "react"
+
+interface GameLayoutProps {
+  homeLink: ReactNode,
+  gameTitle: ReactNode,
+  gameInfo: ReactNode,
+  playersList: ReactNode,
+  gameMoveInfo: ReactNode,
+  actions: ReactNode[],
+  gameCells: ReactNode,
+}
+
 export const GameLayout = ({
   homeLink,
   gameTitle,
@@ -6,7 +18,7 @@ export const GameLayout = ({
   gameMoveInfo,
   actions,
   gameCells
-}) => {
+}: GameLayoutProps) => {
   return (
     <div className="mb-10">
       <div className="pl-2">

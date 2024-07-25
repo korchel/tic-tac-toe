@@ -18,6 +18,7 @@ import { useReducer } from "react";
 import { computeWinnerSymbol } from "./model/computeWinnerSymbol";
 import { computePlayerTimer } from "./model/computePlayerTimer";
 import { useInterval } from "../lib/timers";
+import { ButtonComponent } from "../uikit/ButtonComponent";
 
 const PLAYERS_COUNT = 3;
 
@@ -35,7 +36,6 @@ export const Game = () => {
       now: Date.now(),
     });
   });
-
 
   const winnerSequence = computeWinner(gameState);
   const nextMove = getNextMove(gameState);
@@ -81,6 +81,7 @@ export const Game = () => {
             />
           ))
         }
+        actions={<ButtonComponent />}
       />
       <GameOverModal
         winnerName={winner?.name}
