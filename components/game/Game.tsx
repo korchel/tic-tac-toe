@@ -7,7 +7,7 @@ import { players } from "./constants";
 import { PlayerInfo } from "./ui/PlayerInfo";
 import { GameMoveInfo } from "./ui/GameMoveInfo";
 import { getNextMove } from "./model/getNextMove";
-import { computeWinner } from "./model/computeWinner";
+import { computeWinnerSequence } from "./model/computeWinnerSequence";
 import { GameOverModal } from "./ui/GameOverModal";
 import {
   gameStateReducer,
@@ -23,21 +23,23 @@ import { GameStateActionType } from "../../types";
 const PLAYERS_COUNT = 3;
 
 export const Game = () => {
-  const [ gameState, dispatch] = useReducer(gameStateReducer, {
+  const [gameState, dispatch] = useReducer(gameStateReducer, {
     playersNumber: PLAYERS_COUNT,
-    defaultTimer: 5000,
+    defaultTimer: 60000,
+    currentMoveStart: Date.now(),
   }, getInitialState);
 
   const { cells, currentMove, currentMoveStart } = gameState;
+  console.log('render')
 
-  useInterval(1000, !!currentMoveStart, () => {
+  useInterval(100, !!currentMoveStart, () => {
     dispatch({
       type: GameStateActionType.TICK,
       now: Date.now(),
     });
   });
 
-  const winnerSequence = computeWinner(gameState);
+  const winnerSequence = computeWinnerSequence(gameState);
   const nextMove = getNextMove(gameState);
   const winnerSymbol = computeWinnerSymbol(gameState, { winnerSequence, nextMove });
   const winner = players.find((player) => player.symbol === winnerSymbol);

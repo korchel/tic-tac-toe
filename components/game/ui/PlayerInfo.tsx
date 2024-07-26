@@ -25,6 +25,7 @@ export const PlayerInfo = ({
   timer,
   timeStartAt,
 }: PlayerInfoProps) => {
+
   const now = useNow(1000, !!timeStartAt);
 
   const mseconds = Math.max(now ? timer - (now - (timeStartAt ?? 0)) : timer, 0);

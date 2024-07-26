@@ -1,9 +1,13 @@
+import { ReactNode } from "react";
 import { ButtonComponent } from "../../uikit/ButtonComponent";
 import { ModalComponent } from "../../uikit/ModalComponent";
 
+interface GameOverModalProps {
+  winnerName: string | undefined,
+  playersList: ReactNode[],
+}
 
-
-export const GameOverModal = ({ winnerName, playersList }) => {
+export const GameOverModal = ({ winnerName, playersList }: GameOverModalProps) => {
   const onClose = () => {
     console.log('close')
   }

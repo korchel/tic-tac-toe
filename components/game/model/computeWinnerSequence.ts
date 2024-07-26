@@ -1,6 +1,6 @@
 import { IState } from "../../../types";
 
-export const computeWinner = (gameState: IState, sequenceSize: number = 5, fieldSize: number = 19): number[] | undefined => {
+export const computeWinnerSequence = (gameState: IState, sequenceSize: number = 5, fieldSize: number = 19): number[] | undefined => {
   const { cells } = gameState;
 
   const range: number = Math.floor(sequenceSize / 2);
