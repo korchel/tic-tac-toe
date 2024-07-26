@@ -2,8 +2,15 @@ import clsx from "clsx";
 
 import CloseIcon from './close.svg';
 import { createPortal } from "react-dom";
+import { DetailedHTMLProps, HTMLAttributes } from "react";
 
-export const ModalComponent = ({ width = 'md', className, children, isOpen = false, onClose}) => {
+interface ModalComponentProps extends DetailedHTMLProps<HTMLAttributes<HTMLHRElement>, HTMLHRElement> {
+  width?: 'full' | 'md',
+  isOpen: boolean,
+  onClose: () => void,
+}
+
+export const ModalComponent = ({ width = 'md', className, children, isOpen = false, onClose}: ModalComponentProps) => {
   if (!isOpen) {
     return null;
   }
@@ -44,8 +51,10 @@ export const ModalComponent = ({ width = 'md', className, children, isOpen = fal
   );
   return createPortal(modal, document.getElementById('modals'));
 };
+ 
+interface ModalPartsProps extends DetailedHTMLProps<HTMLAttributes<HTMLHRElement>, HTMLHRElement> {}
 
-ModalComponent.Header = ({ children, className }) => {
+ModalComponent.Header = function ModalHeader({ children, className }: ModalPartsProps): JSX.Element {
   return (
     <div className={clsx(className, 'px-6 pt-6 pb-4 text-2xl')}>
       {children}
@@ -53,7 +62,7 @@ ModalComponent.Header = ({ children, className }) => {
   );
 };
 
-ModalComponent.Body = function ModalBody({ children, className }) {
+ModalComponent.Body = function ModalBody({ children, className }: ModalPartsProps) {
   return (
     <div className={clsx(className, 'px-6')}>
       {children}
@@ -61,7 +70,7 @@ ModalComponent.Body = function ModalBody({ children, className }) {
   );
 };
 
-ModalComponent.Footer = function ModalFooter({ children, className }) {
+ModalComponent.Footer = function ModalFooter({ children, className }: ModalPartsProps) {
   return (
     <div className={clsx(className, 'mt-auto p-6 flex gap-4 justify-end')}>
       {children}

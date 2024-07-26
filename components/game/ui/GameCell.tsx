@@ -4,9 +4,9 @@ import { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
 import { Symbols } from '../../../types';
 
 interface IButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
-  symbol: Symbols,
+  symbol: Symbols | null,
   clickCell: () => void,
-  isWinner: boolean,
+  isWinner: boolean | undefined,
   disabled: boolean,
 }
 

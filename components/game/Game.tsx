@@ -10,7 +10,6 @@ import { getNextMove } from "./model/getNextMove";
 import { computeWinner } from "./model/computeWinner";
 import { GameOverModal } from "./ui/GameOverModal";
 import {
-  GAME_STATE_ACTIONS,
   gameStateReducer,
   getInitialState,
 } from "./model/gameStateReducer";
@@ -19,6 +18,7 @@ import { computeWinnerSymbol } from "./model/computeWinnerSymbol";
 import { computePlayerTimer } from "./model/computePlayerTimer";
 import { useInterval } from "../lib/timers";
 import { ButtonComponent } from "../uikit/ButtonComponent";
+import { GameStateActionType } from "../../types";
 
 const PLAYERS_COUNT = 3;
 
@@ -30,9 +30,9 @@ export const Game = () => {
 
   const { cells, currentMove, currentMoveStart } = gameState;
 
-  useInterval(1000, currentMoveStart, () => {
+  useInterval(1000, !!currentMoveStart, () => {
     dispatch({
-      type: GAME_STATE_ACTIONS.TICK,
+      type: GameStateActionType.TICK,
       now: Date.now(),
     });
   });
@@ -74,14 +74,14 @@ export const Game = () => {
           cells.map((cell, index) => (
             <GameCell
               key={index}
-              clickCell={() => { dispatch({type: GAME_STATE_ACTIONS.CELL_CLICK, index, now: Date.now() }) }}
+              clickCell={() => { dispatch({type: GameStateActionType.CELL_CLICK, index, now: Date.now() }) }}
               isWinner={winnerSequence?.includes(index)}
               disabled={!!winnerSymbol}
               symbol={cell}
             />
           ))
         }
-        actions={<ButtonComponent />}
+        actions={<ButtonComponent size="md" variant="primary"/>}
       />
       <GameOverModal
         winnerName={winner?.name}

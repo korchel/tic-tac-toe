@@ -1,10 +1,9 @@
-import { MOVE_ORDER } from "../constants";
+import { IState, Symbols } from "../../../types";
 
-
-export const getNextMove = (gameState) => {
+export const getNextMove = (gameState: IState): Symbols => {
   const { currentMove, playersNumber, timers } = gameState;
 
-  const currentOrder = MOVE_ORDER
+  const currentOrder = Object.values(Symbols)
     .slice(0, playersNumber)
     .filter((symbol) => timers[symbol] > 0);
 
@@ -13,4 +12,3 @@ export const getNextMove = (gameState) => {
 
   return currentOrder[nextMoveIndex] ?? currentOrder[0];
 };
-

@@ -1,9 +1,11 @@
-export const computeWinner = (gameState, sequenceSize = 5, fieldSize = 19) => {
+import { IState } from "../../../types";
+
+export const computeWinner = (gameState: IState, sequenceSize: number = 5, fieldSize: number = 19): number[] | undefined => {
   const { cells } = gameState;
 
-  const range = Math.floor(sequenceSize / 2);
+  const range: number = Math.floor(sequenceSize / 2);
 
-  const compareElements = (indexes) => {
+  const compareElements = (indexes: number[]) => {
     let result = true;
     for (let i = 1; i < indexes.length; i += 1) {
       result &&= !!cells[indexes[i]];
@@ -12,8 +14,8 @@ export const computeWinner = (gameState, sequenceSize = 5, fieldSize = 19) => {
     return result;
   };
 
-  const getSequenceIndexes = (i) => {
-    const result = [[], [], [], []];
+  const getSequenceIndexes = (i: number) => {
+    const result: Array<number>[] = [[], [], [], []];
     for (let j = 0; j < sequenceSize; j += 1) {
       result[0].push(j - range + i);
       result[1].push(j - range + i + (j - range) * fieldSize);

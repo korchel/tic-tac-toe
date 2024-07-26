@@ -1,11 +1,13 @@
-export const computePlayerTimer = (gameState, playerSymbol) => {
-  const { timers, currentMove, currentMoveSatrt } = gameState;
+import { IState, Symbols } from "../../../types";
+
+export const computePlayerTimer = (gameState: IState, playerSymbol: Symbols) => {
+  const { timers, currentMove, currentMoveStart } = gameState;
 
   return {
     timer: timers[playerSymbol],
     timeStartAt:
       playerSymbol === currentMove
-      ? currentMoveSatrt
+      ? currentMoveStart
       : undefined,
   };
 };

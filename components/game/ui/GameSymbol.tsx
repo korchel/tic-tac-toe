@@ -2,14 +2,19 @@ import ZeroIcon from './icons/zero.svg';
 import CrossIcon from './icons/cross.svg';
 import TriangleIcon from './icons/triangle.svg';
 import SquareIcon from './icons/square.svg';
-import { SYMBOLS } from '../constants';
+import { Symbols } from '../../../types';
 
-export const GameSymbol = ({ symbol, className }) => {
+interface GameSymbolProps {
+  symbol: Symbols,
+  className: string,
+}
+
+export const GameSymbol = ({ symbol, className }: GameSymbolProps) => {
   const Icon = {
-    [SYMBOLS.CROSS]: CrossIcon,
-    [SYMBOLS.ZERO]: ZeroIcon,
-    [SYMBOLS.TRIANGLE]: TriangleIcon,
-    [SYMBOLS.SQUARE]: SquareIcon,
+    [Symbols.Cross]: CrossIcon,
+    [Symbols.Zero]: ZeroIcon,
+    [Symbols.Triangle]: TriangleIcon,
+    [Symbols.Square]: SquareIcon,
   }[symbol];
 
   return <Icon className={className} />;

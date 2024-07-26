@@ -1,9 +1,14 @@
 import { ButtonComponent } from "../../uikit/ButtonComponent";
 import { ModalComponent } from "../../uikit/ModalComponent";
 
+
+
 export const GameOverModal = ({ winnerName, playersList }) => {
+  const onClose = () => {
+    console.log('close')
+  }
   return (
-    <ModalComponent isOpen={!!winnerName}>
+    <ModalComponent isOpen={!!winnerName} onClose={onClose}>
       <ModalComponent.Header>
         Игра завершена
       </ModalComponent.Header>

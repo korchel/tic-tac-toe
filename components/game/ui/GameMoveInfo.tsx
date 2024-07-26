@@ -1,6 +1,14 @@
+import { DetailedHTMLProps, HTMLAttributes } from "react";
 import { GameSymbol } from "./GameSymbol";
+import { Symbols } from "../../../types";
 
-export const GameMoveInfo = ({ currentMove, nextMove }) => {
+interface GameMoveInfoProps extends DetailedHTMLProps<HTMLAttributes<HTMLHRElement>, HTMLHRElement> {
+  currentMove: Symbols,
+  nextMove: Symbols,
+}
+
+export const GameMoveInfo = ({ currentMove, nextMove }: GameMoveInfoProps) => {
+
   return (
     <>
       <div className="flex items-center gap-1 text-xl leading-tight semibold">

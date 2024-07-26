@@ -1,12 +1,12 @@
-import { ReactNode } from "react"
+import { DetailedHTMLProps, HTMLAttributes, ReactNode } from "react"
 
-interface GameLayoutProps {
+interface GameLayoutProps extends DetailedHTMLProps<HTMLAttributes<HTMLHRElement>, HTMLHRElement>  {
   homeLink: ReactNode,
   gameTitle: ReactNode,
   gameInfo: ReactNode,
   playersList: ReactNode,
   gameMoveInfo: ReactNode,
-  actions: ReactNode[],
+  actions: ReactNode,
   gameCells: ReactNode,
 }
 

@@ -1,28 +1,26 @@
-import { MOVE_ORDER, SYMBOLS } from "../constants";
+import { GameStateAction, GameStateActionType, IState, Symbols, TimersType } from "../../../types";
+
 import { getNextMove } from "./getNextMove";
 
-export const GAME_STATE_ACTIONS = {
-  CELL_CLICK: 'cellClick',
-  TICK: 'tick',
-};
+export const gameStateReducer = (state: IState, action: GameStateAction) => {
+  const { index, now } = action;
 
-export const gameStateReducer = (state, action) => {
   switch (action.type) {
-    case GAME_STATE_ACTIONS.CELL_CLICK: {
-      const { index, now } = action;
-      if (state.cells[index]) {
+    case GameStateActionType.CELL_CLICK: {
+
+      if (state.cells[index as number]) {
         return state;
       }
       return {
         ...state,
         timers: updateTimers(state, now),
         currentMove: getNextMove(state),
+        cells: updateCells(state, index as number),
         currentMoveSatrt: now,
       };
     }
-    case GAME_STATE_ACTIONS.TICK: {
-      const { now } = action;
-      if (getTimeOver(state, now)) {
+    case GameStateActionType.TICK: {
+      if (!getTimeOver(state, now)) {
         return state;
       }
       return {
@@ -30,7 +28,6 @@ export const gameStateReducer = (state, action) => {
         timers: updateTimers(state, now),
         currentMove: getNextMove(state),
         currentMoveSatrt: now,
-        cells: updateCells(state, index),
       };
     }
     default:
@@ -38,21 +35,21 @@ export const gameStateReducer = (state, action) => {
   }
 };
 
-export const getInitialState = ({ playersNumber, defaultTimer }) => ({
+export const getInitialState = ({ playersNumber, defaultTimer }: {playersNumber: number, defaultTimer: number}): IState => ({
   cells: new Array(19 * 19).fill(null),
-  currentMove: SYMBOLS.ZERO,
-  currentMoveSatrt: Date.now(),
+  currentMove: Symbols.Zero,
+  currentMoveStart: Date.now(),
   playersNumber,
-  timers: MOVE_ORDER.reduce((timers, symbol, index) => {
+  timers: Object.values(Symbols).reduce((timers, symbol, index) => {
     if (index < playersNumber) {
       timers[symbol] = defaultTimer;
     }
     return timers;
-  }, {}),
+  }, {} as TimersType),
 });
 
-function updateTimers(gameState, now) {
-  const diff = now - gameState.currentMoveSatrt;
+function updateTimers(gameState: IState, now: number) {
+  const diff = now - gameState.currentMoveStart;
 
   const timer = gameState.timers[gameState.currentMove];
   return {
@@ -61,11 +58,11 @@ function updateTimers(gameState, now) {
   };
 }
 
-function updateCells(gameState, index) {
+function updateCells(gameState: IState, index: number) {
   return  gameState.cells.map((cell, i) => i === index ? getNextMove(gameState) : cell)
 }
 
-function getTimeOver(gameState, now) {
+function getTimeOver(gameState: IState, now: number) {
   const { currentMove } = gameState;
   const currentTimer = updateTimers(gameState, now)[currentMove];
   return currentTimer <= 0;
