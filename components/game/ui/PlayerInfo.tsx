@@ -12,8 +12,8 @@ interface PlayerInfoProps extends DetailedHTMLProps<HTMLAttributes<HTMLHRElement
   rating: number,
   avatar: StaticImageData,
   symbol: Symbols,
-  timer: number,
-  timeStartAt: number | undefined,
+  timer?: number,
+  timeStartAt?: number | undefined,
 }
 
 export const PlayerInfo = ({
@@ -28,7 +28,7 @@ export const PlayerInfo = ({
 
   const now = useNow(1000, !!timeStartAt);
 
-  const mseconds = Math.max(now ? timer - (now - (timeStartAt ?? 0)) : timer, 0);
+  const mseconds = Math.max(now ? (timer ?? 0) - (now - (timeStartAt ?? 0)) : (timer  ?? 0), 0);
   const seconds = Math.ceil(mseconds / 1000);
   const minutesString = String(Math.floor(seconds / 60)).padStart(2, "0");
   const secondsString = String(seconds % 60).padStart(2, "0");

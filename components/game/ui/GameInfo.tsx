@@ -14,6 +14,7 @@ export const GameInfo = ({
   isRating,
   timeMode
 }: GameInfoProps) => {
+
   return (
     <div className="flex items-center gap-3 text-xs text-slate-400">
       {isRating && <StarIcon />}

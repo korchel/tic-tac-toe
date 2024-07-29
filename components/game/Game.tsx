@@ -13,36 +13,37 @@ import {
   gameStateReducer,
   getInitialState,
 } from "./model/gameStateReducer";
-import { useReducer } from "react";
+import { useCallback, useMemo, useReducer } from "react";
 import { computeWinnerSymbol } from "./model/computeWinnerSymbol";
 import { computePlayerTimer } from "./model/computePlayerTimer";
 import { useInterval } from "../lib/timers";
 import { ButtonComponent } from "../uikit/ButtonComponent";
 import { GameStateActionType } from "../../types";
 
-const PLAYERS_COUNT = 3;
+const PLAYERS_COUNT = 2;
 
 export const Game = () => {
   const [gameState, dispatch] = useReducer(gameStateReducer, {
     playersNumber: PLAYERS_COUNT,
-    defaultTimer: 60000,
+    defaultTimer: 10000,
     currentMoveStart: Date.now(),
   }, getInitialState);
 
   const { cells, currentMove, currentMoveStart } = gameState;
-  console.log('render')
 
-  useInterval(100, !!currentMoveStart, () => {
+  useInterval(100, !!currentMoveStart, useCallback(() => {
     dispatch({
       type: GameStateActionType.TICK,
       now: Date.now(),
     });
-  });
+  }, []), );
 
-  const winnerSequence = computeWinnerSequence(gameState);
+  const winnerSequence = useMemo(() => computeWinnerSequence(gameState), [gameState]);
   const nextMove = getNextMove(gameState);
   const winnerSymbol = computeWinnerSymbol(gameState, { winnerSequence, nextMove });
   const winner = players.find((player) => player.symbol === winnerSymbol);
+
+  const handleClickCell = useCallback((index: number) => { dispatch({type: GameStateActionType.CELL_CLICK, index, now: Date.now() }) }, [])
 
   return (
     <>
@@ -76,7 +77,8 @@ export const Game = () => {
           cells.map((cell, index) => (
             <GameCell
               key={index}
-              clickCell={() => { dispatch({type: GameStateActionType.CELL_CLICK, index, now: Date.now() }) }}
+              index={index}
+              clickCell={handleClickCell}
               isWinner={winnerSequence?.includes(index)}
               disabled={!!winnerSymbol}
               symbol={cell}
@@ -88,11 +90,8 @@ export const Game = () => {
       <GameOverModal
         winnerName={winner?.name}
         playersList={players.slice(0, PLAYERS_COUNT).map((player, index) => {
-          const { timer, timeStartAt } = computePlayerTimer(gameState, player.symbol);
           return (
             <PlayerInfo
-              timer={timer}
-              timeStartAt={timeStartAt}
               key={player.id}
               avatar={player.avatar}
               name={player.name}

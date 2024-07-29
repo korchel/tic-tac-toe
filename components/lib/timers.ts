@@ -23,16 +23,15 @@ export const useNow = (interval: number, isTimerOn: boolean) => {
 
 export const useInterval = (interval: number, isTimerOn: boolean, cb: () => void) => {
 
-  console.log(isTimerOn, 'istimeron')
   useEffect(() => {
-    if (isTimerOn) {
+    if (!isTimerOn) {
       return;
     }
   
-    const intervalId  = setInterval(cb, interval);
+    const intervalId  = setInterval(() => { cb() }, interval);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [interval, isTimerOn]);
+  }, [interval, isTimerOn, cb]);
 };

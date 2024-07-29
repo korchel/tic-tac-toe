@@ -4,7 +4,6 @@ import { getNextMove } from "./getNextMove";
 
 export const gameStateReducer = (state: IState, action: GameStateAction) => {
 
-
   switch (action.type) {
     case GameStateActionType.CELL_CLICK: {
       const { index, now } = action;
@@ -22,7 +21,7 @@ export const gameStateReducer = (state: IState, action: GameStateAction) => {
     }
     case GameStateActionType.TICK: {
       const { now } = action;
-      if (!getTimeOver(state, now)) {
+      if (!isTimeOver(state, now)) {
         return state;
       }
       return {
@@ -64,7 +63,7 @@ function updateCells(gameState: IState, index: number) {
   return  gameState.cells.map((cell, i) => i === index ? getNextMove(gameState) : cell)
 }
 
-function getTimeOver(gameState: IState, now: number) {
+function isTimeOver(gameState: IState, now: number) {
   const { currentMove } = gameState;
   const currentTimer = updateTimers(gameState, now)[currentMove];
   return currentTimer <= 0;
